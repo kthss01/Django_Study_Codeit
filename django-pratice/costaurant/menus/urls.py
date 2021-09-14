@@ -5,5 +5,6 @@ from . import views
 
 urlpatterns = [
     # path('URL 패턴', view 함수)
-    path('', views.index_view)
+    path('', views.index_view),
+    path('food/<str:menu>/', views.detail)
 ]
