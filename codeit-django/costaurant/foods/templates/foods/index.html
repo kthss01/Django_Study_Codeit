@@ -7,66 +7,14 @@
 {% endblock date-block %}
 
 {% block food-container %}
+  {% for menu in menus %}
     <div class="food">
-      <img src={% static 'foods/images/chicken.jpg' %} width="300px" height="200px"/>
+      <img src={% get_static_prefix %}{{ menu.img_path }} width="300px" height="200px"/>
       <div class="info">
-        <h3>코딩에 빠진 닭</h3>
-        <P>주머니가 가벼운 당신의 마음까지 생각한 가격!</p>
-        <a href="/foods/chicken">메뉴 보기</a>
-      </div>
-    </div>
-    
-    <div class="food">
-      <img src={% static 'foods/images/sushi.jpg' %} width="300px" height="200px"/>
-      <div class="info">
-        <h3>코코스시</h3>
-        <P>주머니가 가벼운 당신의 마음까지 생각한 가격!</p>
+        <h3>{{ menu.name }}</h3>
+        <p>{{ menu.description }}</p>
         <a href="#">메뉴 보기</a>
       </div>
     </div>
-    
-    <div class="food">
-      <img src={% static "foods/images/burger.jpg" %} width="300px" height="200px"/>
-      <div class="info">
-        <h3>코데리아</h3>
-        <P>주머니가 가벼운 당신의 마음까지 생각한 가격!</p>
-        <a href="#">메뉴 보기</a>
-      </div>
-    </div>
-    
-    <div class="food">
-      <img src={% static "foods/images/bibimbap.jpg" %} width="300px" height="200px"/>
-      <div class="info">
-        <h3>코가네</h3>
-        <P>주머니가 가벼운 당신의 마음까지 생각한 가격!</p>
-        <a href="#">메뉴 보기</a>
-      </div>
-    </div>
-
-    <div class="food">
-      <img src={% static "foods/images/banana.jpg" %} width="300px" height="200px"/>
-      <div class="info">
-        <h3>나에게 바나나</h3>
-        <P>바나나 먹으면 내게 바나나</p>
-        <a href="#">메뉴 보기</a>
-      </div>
-    </div>
-
-    <div class="food">
-      <img src={% static "foods/images/croquette.jpg" %} width="300px" height="200px"/>
-      <div class="info">
-        <h3>귀여운 고로케</h3>
-        <P>속이 꽉찬 고로케</p>
-        <a href="#">메뉴 보기</a>
-      </div>
-    </div>
-
-     <div class="food">
-      <img src={% static "foods/images/pumpkin_soup.jpg" %} width="300px" height="200px"/>
-      <div class="info">
-        <h3>단호한 단호박죽</h3>
-        <P>단호하게 맛있는 단호박죽</p>
-        <a href="#">메뉴 보기</a>
-      </div>
-    </div>
+  {% endfor %}
 {% endblock food-container %}
