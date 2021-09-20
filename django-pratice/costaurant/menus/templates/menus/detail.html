@@ -23,13 +23,13 @@
                     <img src="{% static 'menus/images/menu-txt.svg' %}">
                 </h2>
                 <div class="menu_img">
-                    <img src="{% static 'menus/images/chicken.jpg' %}">
+                    <img src="{% get_static_prefix %}{{ menu.img_path }}">
                 </div>
                 <div class="menu_info">
-                    <h3>코딩에 빠진 닭</h3>
-                    <h4>Crispy, Juicy chicken with Soy sauce</h4>
-                    <p class="menu-desc">지금까지 이런 맛은 없었다. 이건은 갈비인가 통닭인가</p>
-                    <p class="price">&#8361;20,000원</p>
+                    <h3>{{ menu.name }}</h3>
+                    <h4>{{ menu.name_eng }}</h4>
+                    <p class="menu-desc">{{ menu.description }}</p>
+                    <p class="price">&#8361;{{ menu.price }}원</p>
                 </div>
                 <div class="back-main">
                     <a href="/menus/">돌아가기</a>

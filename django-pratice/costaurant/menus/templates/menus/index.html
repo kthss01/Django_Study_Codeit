@@ -24,16 +24,19 @@
        <div class="container">
             <div class="content_txt">
                 <h2>오늘의 메뉴</h2>
-                <p class="date-text"> {{ today }} </p>
+                <p class="date-text"> {{ date }} </p>
             </div>
             <div class="food_container">
-                <div class="food">
-                  <img src={% static "menus/images/chicken.jpg" %}/> 
-                  <div class="info">
-                    <h3>코딩에 빠진 닭</h3>
-                    <p>지금까지 이런 맛은 없었다. 이것은 갈비인가 통닭인가 </p>
-                    <a href="food/chicken/">메뉴 보기</a>
-                </div>
+                {% for menu in menus %}
+                    <div class="food">
+                        <img src={% get_static_prefix %}{{ menu.img_path }}> 
+                        <div class="info">
+                            <h3>{{ menu.name }}</h3>
+                            <p>{{ menu.description }}</p>
+                            <a href="/menus/food/{{ menu.id }}">메뉴 보기</a>
+                        </div>
+                    </div>
+                {% endfor %}
            </div>
        </div>
     </div>
