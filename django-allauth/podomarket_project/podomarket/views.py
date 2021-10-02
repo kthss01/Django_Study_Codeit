@@ -4,8 +4,7 @@ from allauth.account.views import PasswordChangeView
 
 # Create your views here.
 def index(request):
-    # print(request.user.is_authenticated)
-    return render(request, "coplate/index.html")
+    return render(request, "podomarket/index.html")
 
 class CustomPasswordChangeView(PasswordChangeView):
     def get_success_url(self):
