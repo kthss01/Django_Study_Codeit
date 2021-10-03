@@ -26,7 +26,7 @@ urlpatterns = [
     path('', include('podomarket.urls')),
     # allauth
     path("email-confirmation-done",
-        TemplateView.as_view(template_name="podomarket/email_confirmation_done.html"),
+        TemplateView.as_view(template_name="account/email_confirmation_done.html"),
         name="account_email_confirmation_done"
     ),
     path("password/change/",
