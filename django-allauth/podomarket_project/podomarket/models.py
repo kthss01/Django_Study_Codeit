@@ -37,7 +37,7 @@ class Post(models.Model):
         ('중', '중'),
         ('하', '하'),
     ]
-    item_condition = models.CharField(max_length=10, choices=CONDITION_CHOICES) # 물품 상태
+    item_condition = models.CharField(max_length=10, choices=CONDITION_CHOICES, default=None) # 물품 상태
     
     item_details = models.TextField(blank=True) # 물품 상세 설명
     
@@ -49,6 +49,8 @@ class Post(models.Model):
     
     dt_created = models.DateTimeField(auto_now_add=True) # 게시글 생성 날짜+시간
     dt_updated = models.DateTimeField(auto_now=True) # 게시글 마지막 수정 날짜+시간
+    
+    is_sold = models.BooleanField(default=False)
     
     def __str__(self):
         return self.title
