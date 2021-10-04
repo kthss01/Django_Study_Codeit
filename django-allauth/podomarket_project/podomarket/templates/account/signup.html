@@ -10,7 +10,9 @@
 {% block content %}
 <div class="signup">
   <form method="post">
-    <img class="logo" src="{% static 'podomarket/assets/logo.svg' %}" alt="포도마켓">
+    <a href="{% url 'index' %}">
+      <img class="logo" src="{% static 'podomarket/assets/logo.svg' %}" alt="포도마켓">
+    </a>
     {% csrf_token %}
     <div class="email">
       {{ form.email|add_class:"podo-input"|attr:"placeholder:이메일"|add_error_class:"error"}}
