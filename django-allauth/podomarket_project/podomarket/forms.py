@@ -1,19 +1,20 @@
+from django.db.models import fields
 from django.forms import ModelForm, widgets, RadioSelect
 
 from podomarket.models import Post
 from .models import User
 
 
-class SignupForm(ModelForm):
-    class Meta:
-        model = User
-        fields = ["nickname", "kakao_id", "address"]
+# class SignupForm(ModelForm):
+#     class Meta:
+#         model = User
+#         fields = ["nickname", "kakao_id", "address"]
         
-    def signup(self, request, user):
-        user.nickname = self.cleaned_data["nickname"]
-        user.kakao_id = self.cleaned_data["kakao_id"]
-        user.address = self.cleaned_data["address"]
-        user.save()
+#     def signup(self, request, user):
+#         user.nickname = self.cleaned_data["nickname"]
+#         user.kakao_id = self.cleaned_data["kakao_id"]
+#         user.address = self.cleaned_data["address"]
+#         user.save()
         
 class PostCreateForm(ModelForm):
     class Meta:
@@ -47,3 +48,13 @@ class PostUpdateForm(ModelForm):
         widgets = {
             "item_condition": RadioSelect,
         }
+        
+class ProfileForm(ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            "nickname",
+            "kakao_id",
+            "address",
+            "profile_pic",
+        ]

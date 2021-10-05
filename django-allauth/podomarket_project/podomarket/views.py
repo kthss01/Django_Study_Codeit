@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views.generic import (
     ListView, 
@@ -10,8 +10,8 @@ from django.views.generic import (
 from braces.views import LoginRequiredMixin, UserPassesTestMixin
 from allauth.account.models import EmailAddress
 from allauth.account.views import PasswordChangeView
-from podomarket.models import Post
-from podomarket.forms import PostCreateForm, PostUpdateForm
+from podomarket.models import Post, User
+from podomarket.forms import PostCreateForm, PostUpdateForm, ProfileForm
 from podomarket.functions import confirmation_required_redirect
 
 # Create your views here.
@@ -20,7 +20,9 @@ class IndexView(ListView):
     template_name = "podomarket/index.html"
     context_object_name = "posts"
     paginate_by = 8
-    ordering = ["-dt_updated"]
+    
+    def get_queryset(self):
+        return Post.objects.filter(is_sold=False).order_by('-dt_created')
     
 class PostDetailView(DetailView):
     model = Post
@@ -74,6 +76,55 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         post = self.get_object()
         return post.author == user
 
-class CustomPasswordChangeView(PasswordChangeView):
+class ProfileView(DetailView):
+    model = User
+    template_name = "podomarket/profile.html"
+    pk_url_kwarg = "user_id"
+    context_object_name = "profile_user"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_id = self.kwargs.get("user_id")
+        context["user_posts"] = Post.objects.filter(author__id=user_id).order_by("-dt_created")[:8]
+        return context
+
+class UserPostListView(ListView):
+    model = Post
+    template_name = "podomarket/user_post_list.html"
+    context_object_name = "user_posts"
+    paginate_by = 8
+    
+    def get_queryset(self):
+        user_id = self.kwargs.get("user_id")
+        return Post.objects.filter(author__id=user_id).order_by("-dt_created")
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["profile_user"] = get_object_or_404(User, id=self.kwargs.get("user_id"))
+        return context
+
+class ProfileSetView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = ProfileForm
+    template_name = "podomarket/profile_set_form.html"
+    
+    def get_object(self, queryset=None):
+        return self.request.user
+    
     def get_success_url(self):
         return reverse("index")
+    
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = ProfileForm
+    template_name = "podomarket/profile_update_form.html"
+    
+    def get_object(self, queryset=None):
+        return self.request.user
+    
+    def get_success_url(self):
+        return reverse("profile", kwargs={"user_id": self.request.user.id})
+
+class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    def get_success_url(self):
+        return reverse("profile", kwargs={"user_id": self.request.user.id})

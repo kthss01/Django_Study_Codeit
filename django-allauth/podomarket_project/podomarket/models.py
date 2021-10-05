@@ -23,6 +23,11 @@ class User(AbstractUser):
         validators=[validate_no_special_characters]
     ) # 주소
     
+    profile_pic = models.ImageField(
+        default="default_profile_pic.jpg",
+        upload_to="profile_pics"
+    )
+    
     def __str__(self):
         return self.email
     

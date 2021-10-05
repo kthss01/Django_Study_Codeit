@@ -1,16 +1,16 @@
 from django.db.models import fields
-from django.forms import ModelForm, widgets, RadioSelect
+from django.forms import ModelForm, widgets, RadioSelect, Textarea
 from .models import User, Review
 
 
-class SignupForm(ModelForm):
-    class Meta:
-        model = User
-        fields = ["nickname"]
+# class SignupForm(ModelForm):
+#     class Meta:
+#         model = User
+#         fields = ["nickname"]
 
-    def signup(self, request, user):
-        user.nickname = self.cleaned_data["nickname"]
-        user.save()
+#     def signup(self, request, user):
+#         user.nickname = self.cleaned_data["nickname"]
+#         user.save()
         
 class ReviewForm(ModelForm):
     class Meta:
@@ -27,4 +27,16 @@ class ReviewForm(ModelForm):
         ]
         widgets = {
             "rating": RadioSelect,
+        }
+          
+class ProfileForm(ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            "nickname",
+            "profile_pic",
+            "intro",
+        ]
+        widgets = {
+            "intro": Textarea,
         }
